@@ -1,0 +1,68 @@
+[ {
+  "actions" : [ {
+    "executionCount" : "1",
+    "name" : "CreateChecklistInstance",
+    "parameters" : {
+      "language" : "en",
+      "objectId" : "${activity.id}",
+      "mandatory" : "true",
+      "objectType" : "Activity",
+      "description" : "As a beginner it is mandatory to complete this checklist for ${activity.subject}",
+      "responsiblePersonId" : "${technician.id}",
+      "checklistTemplateTag" : "1",
+      "checklistCategoryName" : "SkillLevel",
+      "checklistTemplateName" : "New technician checklist",
+      "checklistTemplateVersion" : null
+    }
+  } ],
+  "code" : "DEMO-BR-SKILL",
+  "conditions" : [ [ {
+    "leftOperand" : "${isBeginner[0]}",
+    "operator" : ">",
+    "rightOperand" : "0"
+  }, {
+    "leftOperand" : "${alreadyAttached[0]}",
+    "operator" : "==",
+    "rightOperand" : "0"
+  }, {
+    "leftOperand" : "${old.released}",
+    "operator" : "==",
+    "rightOperand" : "false"
+  }, {
+    "leftOperand" : "${new.released}",
+    "operator" : "==",
+    "rightOperand" : "true"
+  } ] ],
+  "description" : "When Activity is released for a beginner technician, then the “New technician” checklist is attached",
+  "embedded" : false,
+  "enabled" : true,
+  "eventType" : "UPDATE",
+  "executionType" : "ON_SUCCESS",
+  "lastChanged" : 1586567109264,
+  "name" : "Create “New technician” checklist on activity released",
+  "objectType" : "SERVICEASSIGNMENT",
+  "permissionsType" : "USER",
+  "responsible" : "coen.van.gassen@sap.com",
+  "type" : "TWO",
+  "variables" : [ {
+    "name" : "activity",
+    "type" : "Activity",
+    "value" : "activity.id = ${serviceAssignment.activity}",
+    "variableType" : "OBJECT",
+    "version" : 30
+  }, {
+    "name" : "technician",
+    "type" : "UnifiedPerson",
+    "value" : "technician.id = ${serviceAssignment.technician}",
+    "variableType" : "OBJECT",
+    "version" : 11
+  }, {
+    "name" : "isBeginner",
+    "dtoVersions" : "Skill.8;Tag.8;UnifiedPerson.8",
+    "query" : "SELECT COUNT(s.id) FROM Skill s JOIN Tag t ON t.id = s.tag JOIN UnifiedPerson p ON p.id = s.person WHERE t.name = 'Experience Beginner' AND p.id = ${technician.id}"
+  }, {
+    "name" : "alreadyAttached",
+    "dtoVersions" : "ChecklistInstance.17;ChecklistTemplate.17",
+    "query" : "SELECT COUNT(cli.id) FROM ChecklistInstance cli JOIN ChecklistTemplate clt ON clt.id = cli.template WHERE clt.name = 'New technician checklist' AND cli.object.objectId = ${activity.id}"
+  } ]
+} ]

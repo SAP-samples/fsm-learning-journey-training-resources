@@ -1,0 +1,4 @@
+id;firstName;lastName;title;positionName;profession;emailAddress;mobilePhone;officePhone;otherPhone;pager;fax;skypeName;gender;remarks;owners (split separator '|')
+Z00001;John;Doe;Mr;-;;john.doe@example.com;+41 56 500 22 44;;+41 56 700 22 44;414444;+41 123 456;john.doe123;;Do not disturb before 9AM;
+Z00004;Olga;Marshall;Mrs;;;olga.marshall@example.com;;;;;;;;;
+Z00099;Jane;Doe;Mrs;-;;Jane.doe@example.com;41565002278;;41565002278;414448;41123458;jane.doe123;;Do not disturb before 9AM;
