@@ -1,5 +1,5 @@
 # Welcome to the Learning Journey "FSM100"
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/fsm-learning-journey-fsm100-training-resources)](https://api.reuse.software/info/github.com/SAP-samples/fsm-learning-journey-fsm100-training-resources)
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/fsm-learning-journey-training-resources)](https://api.reuse.software/info/github.com/SAP-samples/fsm-learning-journey-training-resources)
 
 Welcome to this repository for the learning journey "FSM100". We provide a starting template for the exercises here.
 
