@@ -1,0 +1,70 @@
+[ {
+  "actions" : [ {
+    "executionCount" : "1",
+    "name" : "Notification",
+    "parameters" : {
+      "to" : "${currentUser.id}",
+      "text" : "Hello ${currentUser.firstName}, Activity ${activity.code} has just been released.",
+      "title" : "Activity Released"
+    }
+  } ],
+  "code" : "TRAINING001",
+  "conditions" : [ [ {
+    "leftOperand" : "${old.released}",
+    "operator" : "==",
+    "rightOperand" : "false"
+  }, {
+    "leftOperand" : "${new.released}",
+    "operator" : "==",
+    "rightOperand" : "true"
+  } ] ],
+  "description" : "<strong>Use Case</strong><p>\r\n  This is an example Business Rule that can be used for demonstration purposes. In this example, the user who releases an activity on the planning board gets a notification on the UI. This rule could for example be altered to react to the unassignment of an already released Activity. \r\n  <p><strong>Solution </strong><p>\r\n  Send a notification to the dispatcher, onto the Web UI/Shell.\r\n  <p><strong>Requirements for this sample rule</strong><p>\r\n  <li>none</li>\r\n  <p>\r\n  <p><strong>How to adjust this sample rule</strong><p>\r\n  <li>adjust the text of the notification according to your requirements</li>\r\n  <li>maintain one or more valid Technical Contacts in the Business Rule header data</li>",
+  "embedded" : false,
+  "enabled" : true,
+  "eventType" : "UPDATE",
+  "executionType" : "ON_SUCCESS",
+  "lastChanged" : 1692017666581,
+  "name" : "TRAINING001 - notification for dispatcher once Service Assignment is released",
+  "objectType" : "SERVICEASSIGNMENT",
+  "permissionsType" : "USER",
+  "responsible" : "fsm100@education.cloud.sap",
+  "type" : "TWO",
+  "skippedLogs" : true,
+  "variables" : [ {
+    "name" : "activity",
+    "type" : "Activity",
+    "value" : "activity.id = ${serviceAssignment.activity}",
+    "variableType" : "OBJECT",
+    "version" : 18
+  }, {
+    "name" : "technician",
+    "type" : "Person",
+    "value" : "technician.id = ${serviceAssignment.technician}",
+    "variableType" : "OBJECT",
+    "version" : 19
+  }, {
+    "name" : "businessPartner",
+    "type" : "BusinessPartner",
+    "value" : "businessPartner.id = ${activity.businessPartner}",
+    "variableType" : "OBJECT",
+    "version" : 20
+  }, {
+    "name" : "address",
+    "type" : "Address",
+    "value" : "address.id = ${activity.address}",
+    "variableType" : "OBJECT",
+    "version" : 18
+  }, {
+    "name" : "employee",
+    "type" : "Person",
+    "value" : "employee.type = 'EMPLOYEE' AND employee.refId = ${technician.id}",
+    "variableType" : "OBJECT",
+    "version" : 19
+  }, {
+    "name" : "serviceCall",
+    "type" : "ServiceCall",
+    "value" : "serviceCall.id = ${activity.object.objectId}",
+    "variableType" : "OBJECT",
+    "version" : 21
+  } ]
+} ]

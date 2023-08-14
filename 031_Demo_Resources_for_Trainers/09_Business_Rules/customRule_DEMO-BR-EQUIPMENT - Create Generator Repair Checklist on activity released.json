@@ -1,0 +1,66 @@
+[ {
+  "actions" : [ {
+    "executionCount" : "1",
+    "name" : "CreateChecklistInstance",
+    "parameters" : {
+      "language" : "en",
+      "objectId" : "${activity.id}",
+      "mandatory" : "false",
+      "objectType" : "Activity",
+      "description" : "Complete this checklist for ${equipment.name} in case of repair",
+      "responsiblePersonId" : "${serviceAssignment.technician}",
+      "checklistTemplateTag" : "1",
+      "checklistCategoryName" : "Generators",
+      "checklistTemplateName" : "Generator repair checklist",
+      "generateChecklistViaJob" : "false",
+      "checklistTemplateVersion" : null
+    }
+  } ],
+  "code" : "DEMO-BR-EQUIPMENT",
+  "conditions" : [ [ {
+    "leftOperand" : "${equipment.name}",
+    "operator" : "==",
+    "rightOperand" : "'Generator'"
+  }, {
+    "leftOperand" : "${alreadyAttached.length}",
+    "operator" : "==",
+    "rightOperand" : "0"
+  }, {
+    "leftOperand" : "${old.released}",
+    "operator" : "==",
+    "rightOperand" : "false"
+  }, {
+    "leftOperand" : "${new.released}",
+    "operator" : "==",
+    "rightOperand" : "true"
+  } ] ],
+  "description" : "<strong>Use Case</strong><p>\r\nWHEN Activity with equipment with requirement \"Generator Repair\" is released \r\nTHEN the \"Generator repair checklist\" checklist is attached\r\n  <p>\r\n  <p><strong>Requirements for this sample rule</strong><p>\r\n  <li>make sure that in this BR, all references to the equipment and the checklist template are spelled in exactly the same way as those source objects</li>\r\n  <p>\r\n  <p><strong>How to adjust this sample rule</strong><p>\r\n  <li>maintain one or more valid Technical Contacts in the Business Rule header data</li>",
+  "embedded" : false,
+  "enabled" : true,
+  "eventType" : "UPDATE",
+  "executionType" : "ON_SUCCESS",
+  "lastChanged" : 1692018224056,
+  "name" : "Create \"Generator repair checklist\"  checklist on activity released",
+  "objectType" : "SERVICEASSIGNMENT",
+  "permissionsType" : "USER",
+  "responsible" : "fsm100@education.cloud.sap",
+  "type" : "TWO",
+  "skippedLogs" : true,
+  "variables" : [ {
+    "name" : "activity",
+    "type" : "Activity",
+    "value" : "activity.id = ${serviceAssignment.activity}",
+    "variableType" : "OBJECT",
+    "version" : 42
+  }, {
+    "name" : "equipment",
+    "type" : "Equipment",
+    "value" : "equipment.id = ${activity.equipment}",
+    "variableType" : "OBJECT",
+    "version" : 24
+  }, {
+    "name" : "alreadyAttached",
+    "dtoVersions" : "ChecklistInstance.19; ChecklistTemplate.20",
+    "query" : "SELECT cli.id FROM ChecklistInstance cli JOIN ChecklistTemplate clt ON clt.id = cli.template WHERE clt.name = 'Generator repair checklist' AND cli.object.objectId = ${activity.id}"
+  } ]
+} ]
